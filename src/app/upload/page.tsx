@@ -33,43 +33,51 @@ export default function UploadPage() {
     }
     setMediaUrls(urls);
     setUploading(false);
-    alert(`${urls.length} files uploaded!`);
+    alert(`${urls.length} files uploaded! AI captions coming...`);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-600 to-red-700 text-white p-8">
-      <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-lg rounded-lg shadow-lg p-8">
-        <h1 className="text-3xl font-bold mb-6">IMPLIFIRE – Upload Media</h1>
-        <p className="mb-4">Upload 3+ photos. AI will generate captions.</p>
-        
-        <input
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={(e) => setFiles(Array.from(e.target.files || []))}
-          className="mb-4 block w-full text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-black hover:file:bg-yellow-300"
-        />
-        <p className="mb-4">Selected: {files.length} files</p>
-        
-        <button
-          onClick={handleUpload}
-          disabled={uploading || files.length < 3}
-          className="bg-yellow-400 text-black px-6 py-3 rounded-full font-bold disabled:opacity-50 hover:bg-yellow-300"
-        >
-          {uploading ? 'Uploading...' : 'Upload & Analyze'}
-        </button>
-
-        {mediaUrls.length > 0 && (
-          <div className="mt-8">
-            <h2 className="text-xl font-bold mb-4">Uploaded:</h2>
-            <div className="grid grid-cols-3 gap-4">
-              {mediaUrls.map((url, i) => (
-                <img key={i} src={url} alt={`Media ${i}`} className="w-full h-40 object-cover rounded" />
-              ))}
-            famous
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-orange-500 via-red-600 to-pink-700 p-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-12">
+          <h1 className="text-5xl font-black text-white mb-4 text-center">IMPLIFIRE UPLOAD</h1>
+          <p className="text-xl text-white/90 mb-8 text-center">Upload 3+ photos. AI generates captions & schedules posts.</p>
+          
+          <div className="bg-white/20 rounded-2xl p-8 mb-8 border-2 border-white/30">
+            <input
+              type="file"
+              multiple
+              accept="image/*,video/*"
+              onChange={(e) => setFiles(Array.from(e.target.files || []))}
+              className="block w-full text-lg text-white file:mr-6 file:py-4 file:px-8 file:rounded-full file:border-0 file:text-lg file:font-bold file:bg-yellow-400 file:text-black hover:file:bg-yellow-300 cursor-pointer"
+            />
+            <p className="mt-4 text-white text-lg">Selected: <span className="font-bold">{files.length}</span> files</p>
           </div>
-        )}
+          
+          <button
+            onClick={handleUpload}
+            disabled={uploading || files.length < 3}
+            className="w-full bg-yellow-400 text-black py-5 rounded-full text-2xl font-bold shadow-xl hover:bg-yellow-300 transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {uploading ? 'Uploading & Analyzing...' : 'Upload & Generate AI Captions'}
+          </button>
+
+          {mediaUrls.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-3xl font-bold text-white mb-6 text-center">Uploaded Media</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                {mediaUrls.map((url, i) => (
+                  <div key={i} className="relative group">
+                    <img src={url} alt={`Media ${i}`} className="w-full h-48 object-cover rounded-2xl shadow-lg group-hover:scale-105 transition-transform duration-200" />
+                    <div className="absolute inset-0 bg-black/50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                      <p className="text-white font-bold">AI Caption Ready</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
